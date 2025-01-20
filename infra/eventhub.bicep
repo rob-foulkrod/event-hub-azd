@@ -1,13 +1,16 @@
+//https://johnnyreilly.com/output-connection-strings-and-keys-from-azure-bicep
+
+
 param location string = resourceGroup().location
-param tags object = {}
 param name string
 
 var abbrs = loadJsonContent('./abbreviations.json')
-var resourceToken = uniqueString(subscription().id, resourceGroup().id, location)
+var str_acc_name=  '${abbrs.storageStorageAccounts}${uniqueString(resourceGroup().id)}'
+
 
 resource eventhub_resource 'Microsoft.EventHub/namespaces@2024-05-01-preview' = {
   name: name
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard'
     tier: 'Standard'
@@ -18,7 +21,7 @@ resource eventhub_resource 'Microsoft.EventHub/namespaces@2024-05-01-preview' = 
       maxReplicationLagDurationInSeconds: 0
       locations: [
         {
-          locationName: resourceGroup().location
+          locationName: location
           roleType: 'Primary'
         }
       ]
@@ -34,8 +37,8 @@ resource eventhub_resource 'Microsoft.EventHub/namespaces@2024-05-01-preview' = 
 }
 
 resource storageAccounts_resource 'Microsoft.Storage/storageAccounts@2023-05-01' = {
-  name: name
-  location: resourceGroup().location
+  name: str_acc_name
+  location: location
   sku: {
     name: 'Standard_LRS'
     tier: 'Standard'
@@ -74,7 +77,7 @@ resource storageAccounts_resource 'Microsoft.Storage/storageAccounts@2023-05-01'
 resource name_RootManageSharedAccessKey 'Microsoft.EventHub/namespaces/authorizationrules@2024-05-01-preview' = {
   parent: eventhub_resource
   name: 'RootManageSharedAccessKey'
-  location: resourceGroup().location
+  location: location
   properties: {
     rights: [
       'Listen'
@@ -87,7 +90,7 @@ resource name_RootManageSharedAccessKey 'Microsoft.EventHub/namespaces/authoriza
 resource network_name_default 'Microsoft.EventHub/namespaces/networkrulesets@2024-05-01-preview' = {
   parent: eventhub_resource
   name: 'default'
-  location: resourceGroup().location
+  location: location
   properties: {
     publicNetworkAccess: 'Enabled'
     defaultAction: 'Allow'
@@ -159,7 +162,7 @@ resource tableservice_name 'Microsoft.Storage/storageAccounts/tableServices@2023
 resource eventhub_resource_name 'Microsoft.EventHub/namespaces/eventhubs@2024-05-01-preview' = {
   parent: eventhub_resource
   name: name
-  location: resourceGroup().location
+  location: location
   properties: {
     messageTimestampDescription: {
       timestampType: 'LogAppend'
@@ -191,26 +194,20 @@ resource eventhub_resource_name 'Microsoft.EventHub/namespaces/eventhubs@2024-05
 resource apps_policy_name 'Microsoft.EventHub/namespaces/eventhubs/authorizationrules@2024-05-01-preview' = {
   parent: eventhub_resource_name
   name: 'apps'
-  location: resourceGroup().location
+  location: location
   properties: {
     rights: [
       'Listen'
       'Send'
     ]
   }
-  dependsOn: [
-    eventhub_resource
-  ]
 }
 
 resource eventhub_consgroup 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2024-05-01-preview' = {
   parent: eventhub_resource_name
   name: '$Default'
-  location: resourceGroup().location
+  location: location
   properties: {}
-  dependsOn: [
-    eventhub_resource
-  ]
 }
 
 resource capdata_container_name 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
@@ -224,7 +221,11 @@ resource capdata_container_name 'Microsoft.Storage/storageAccounts/blobServices/
     denyEncryptionScopeOverride: false
     publicAccess: 'Blob'
   }
-  dependsOn: [
-    storageAccounts_resource
-  ]
 }
+
+var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccounts_resource.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccounts_resource.id, storageAccounts_resource.apiVersion).keys[0].value}'
+var eventHubNamespaceConnectionString = listKeys(apps_policy_name.id, apps_policy_name.apiVersion).primaryConnectionString
+
+output EH_AZD_BLOB_CONNECTION string = blobStorageConnectionString
+output EH_AZD_EH_CONNECTION string = eventHubNamespaceConnectionString
+

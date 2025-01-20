@@ -32,17 +32,14 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   tags: tags
 }
 
-// deploy the conferenceAPI app first, as it is required for the APIM deployment
 module eventhub 'eventhub.bicep' = {
   scope: rg
   name: 'eventHub'
   params: {
-    name: !empty(ehServiceName) ? ehServiceName : '${abbrs.apiManagementService}${resourceToken}'
+    name: !empty(ehServiceName) ? ehServiceName : '${abbrs.eventHubNamespaces}${resourceToken}'
     location: location
-    tags: tags
   }
 }
 
-output EH-AZD-BLOB-CONNECTION string = eventhub.outputs.blobStorageConnectionString
-output EH-AZD-EH-CONNECTION string = eventhub.outputs.eventHubNamespaceConnectionString
-
+output EH_AZD_BLOB_CONNECTION string = eventhub.outputs.EH_AZD_BLOB_CONNECTION 
+output EH_AZD_EH_CONNECTION string = eventhub.outputs.EH_AZD_EH_CONNECTION
