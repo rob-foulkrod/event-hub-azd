@@ -1,3 +1,39 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
 name: event-hub
+metadata:
+  template: azd-init@1.11.0
+hooks:
+  postdeploy:
+    shell: pwsh
+    interactive: true
+    run: |
+      ### step 1: build projects
+      dotnet build ./src/publisher/ -o ./bin/
+      dotnet build ./src/subscriber/ -o ./bin/
+      Write-Output "step 1: projects build completed"
+
+      ### step 2: create env variables
+      $blob = azd env get-value EH_AZD_BLOB_CONNECTION
+      [System.Environment]::SetEnvironmentVariable("EH_AZD_BLOB_CONNECTION", $blob , "User")
+      $hub = azd env get-value EH_AZD_EH_CONNECTION
+      [System.Environment]::SetEnvironmentVariable("EH_AZD_EH_CONNECTION", $hub , "User")
+      Write-Output "step 2: env variables created"
+
+      ### step 3: create shortcut for publisher
+      $SourceFilePath = $pwd.Path + "/bin/publisher.exe"
+      $ShortcutPath = $pwd.Path + "/publisher.lnk"
+      $WScriptObj = New-Object -ComObject "WScript.Shell"
+      $shortcut = $WScriptObj.CreateShortcut($ShortcutPath)
+      $shortcut.TargetPath = $SourceFilePath
+      $shortcut.Save()
+      Write-Output "step 3: shortcut for publisher created"
+
+      ### step 4: create create shortcut for subscriber
+      $SourceFilePath = $pwd.Path + "/bin/subscriber.exe"
+      $ShortcutPath = $pwd.Path + "/subscriber.lnk"
+      $WScriptObj = New-Object -ComObject "WScript.Shell"
+      $shortcut = $WScriptObj.CreateShortcut($ShortcutPath)
+      $shortcut.TargetPath = $SourceFilePath
+      $shortcut.Save()
+      Write-Output "step 4: shortcut for subscriber created"

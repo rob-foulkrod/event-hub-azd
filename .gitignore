@@ -1,1 +1,7 @@
 .azure
+bin
+*.lnk
+src/publisher/obj
+src/publisher/bin
+src/subscriber/obj
+src/subscriber/bin
