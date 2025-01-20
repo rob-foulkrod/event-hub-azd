@@ -29,15 +29,15 @@
             margin: 5px;">
 
 **Tip:** 
-1. This scenario can be used in AZ-204 Developing Azure Solutions and can demonstrate the basics of communication between apps by using a broker (event hub) deployed in Azure.
+1. This scenario can be used in AZ-204 Developing Azure Solutions and can demonstrate the basics of communication between apps by using a _broker_ (Event Hub) deployed in Azure.
 
 2. The demo scenario may require the following ports for communication: 5671/5672 TCP.
 
-3. Subscriber will automatically exit after 30 seconds of listening for events. PLease do not close the console window before exit to let the application properly release resources when disconnected. 
+3. **Subscriber** will automatically exit after 30 seconds of listening for events. PLease _do not close the console window_ before exit to let the application properly release resources when disconnected. 
 
-4. The console application compiled with deployment will use environment variables configured with values during deployment such as Event Hub connection string and Azure Storage account connection string.
+4. The console application compiled with deployment will use environment variables configured with values during deployment such as Event Hub connection string and Azure Storage Account connection string.
 
-5. Event capture functionality starts automatically for 15 min only right after completion of the provisioning scenario. If you want to restart event capturing you can do that manually from the Azure portal.
+5. Event capture functionality _starts automatically for 15 min_ only right after completion of the provisioning scenario. If you want to restart event capturing you can do that manually from the Azure portal.
 </div>
 
 ***
@@ -64,44 +64,44 @@ Publisher will send an event to Azure Event Hub and one of two subscribers will 
 ### 2. Demonstration of simple broker communication scenario.
 
 1. After deployment you will find two shortcuts in the folder of scenario.
-2. Run Subscriber shortcut and wait while it's loading. The console should demonstrate a subscription for four partitions.
+2. Run **Subscriber** shortcut and wait while it's loading. The console should demonstrate a subscription for four partitions.
 
 <img src="./img/sample-sub.png" alt="Subscriber just started" style="width:70%;">
 <br></br>
 
-3. Run Publisher shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
+3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
 <img src="./img/sample-pub.png" alt="Publisher" style="width:50%;">
 <br></br>
 
-4. The subscriber console application should output the events received by the subscriber.
+4. **Subscriber** console application should output the events received by the subscriber.
 
 <img src="./img/sample-sub-processed.png" alt="Subscriber received events" style="width:70%;">
 <br></br>
 
-5. Do not close the subscriber console. It will be automatically closed in 30 seconds after start and you can close the console after it. It's important for the next step.
+5. _Do not close the subscriber console._ It will be automatically closed in 30 seconds after start and you can close the console after it. It's important for the next step.
 
 ### 3. Demonstration of scaled communication scenario.
 
-The scenario will mimic previous with exception of scaling subscribers. More subscribers will process the events with higher speed and will not compete for events because synchronized thought storage accounts.
+The scenario will mimic previous with exception of scaling subscribers. More _subscribers_ will process the events with higher speed and will not compete for events because synchronized thought storage accounts.
 
 <img src="./img/scale.png" alt="Scaled subscribers" style="width:70%;">
 <br></br>
 
 1. After deployment you will find two shortcuts in the folder of scenario.
 
-2. Run Subscriber shortcut and wait while it's loading. Run two more  subscriber and observer output on their console. After 10 seconds you can see that one of the subscribers will be connected to two partitions and the other will be connected to the other single partitions. You can message 'Another processor claimed ownership' when the partition was disconnected from one subscriber and went to another subscriber.
+2. Run **Subscriber** shortcut and wait while it's loading. Run two more  subscriber and observer output on their console. After 10 seconds you can see that one of the subscribers will be connected to two partitions and the other will be connected to the other single partitions. You can message '_Another processor claimed ownership_' when the partition was disconnected from one subscriber and went to another subscriber.
 
 <img src="./img/3sub.png" alt="New 3 subscribers" style="width:70%;">
 <br></br>
 
 
-3. Run Publisher shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
+3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
 <img src="./img/sample-pub.png" alt="New Publisher" style="width:50%;">
 <br></br>
 
-4. Observe output of subscribers. Because publisher will send by 10 events on each partition in round-robin you can observe how the events will be received by the single subscriber
+4. Observe output of **subscribers**. Because publisher will send by 10 events on each partition in round-robin you can observe how the events will be received by the single subscriber
 
 
 <img src="./img/3sub-processed.png" alt="3 Subscribers processed events" style="width:70%;">
@@ -115,17 +115,17 @@ To observe captured events you need to navigate to a storage account deployed in
 
 <img src="./img/folders-cap.png" alt="3 Subscribers processed events" style="width:50%;">
 
-You can observe the file content from the Azure portal or use a 3rd party tool to view the captured file. The Apache AVRO format is used for capturing events.
+You can observe the file content from the Azure portal or use a 3rd party tool to view the captured file. The _Apache AVRO_ format is used for capturing events.
 
 <img src="./img/avrio.png" alt="3 Subscribers processed events" style="width:100%;">
 
 ### 5. References.
 
-1. Feature of Event Hub https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-features
-2. SDK library Azure.Messaging.EventHubs and code examples https://www.nuget.org/packages/Azure.Messaging.EventHubs/
-3. Event Hub code samples: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-samples 
-4. Event stream capturing https://learn.microsoft.com/en-us/azure/event-hubs/explore-captured-avro-files
-2. AVRO format documentation https://avro.apache.org/docs/
+1. [Feature of Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-features)
+2. [SDK library Azure.Messaging.EventHubs and code examples](https://www.nuget.org/packages/Azure.Messaging.EventHubs/)
+3. [Event Hub code samples](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-samples) 
+4. [Event stream capturing](https://learn.microsoft.com/en-us/azure/event-hubs/explore-captured-avro-files)
+2. [AVRO format documentation](https://avro.apache.org/docs/)
 
 
 [comment]: <> (this is the closing section of the demo steps. Please do not change anything here to keep the layout consistent with the other demoguides.)
