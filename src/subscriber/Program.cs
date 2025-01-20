@@ -29,6 +29,17 @@ namespace subscriber
             EventHubConnectionString = Environment.GetEnvironmentVariable("EH_AZD_EH_CONNECTION");
             StorageConnectionString = Environment.GetEnvironmentVariable("EH_AZD_BLOB_CONNECTION");
 
+            if (String.IsNullOrEmpty(EventHubConnectionString))
+            {
+                Console.WriteLine("Environment variable EH_AZD_EH_CONNECTION does not specified");
+                Environment.Exit(1);
+            }
+            else if (String.IsNullOrEmpty(StorageConnectionString))
+            {
+                Console.WriteLine("Environment variable EH_AZD_BLOB_CONNECTION does not specified");
+                Environment.Exit(1);
+            }
+
             var storageClient = new BlobContainerClient(
                 StorageConnectionString, "capdate");
 

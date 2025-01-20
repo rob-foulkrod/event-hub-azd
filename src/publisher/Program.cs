@@ -15,6 +15,12 @@ namespace publisher
         {
             EventHubConnectionString = Environment.GetEnvironmentVariable("EH_AZD_EH_CONNECTION");
 
+            if (String.IsNullOrEmpty(EventHubConnectionString))
+            {
+                Console.WriteLine("Environment variable EH_AZD_EH_CONNECTION does not specified");
+                Environment.Exit(1);
+            }
+
             var producer = new EventHubProducerClient(EventHubConnectionString, EventHubConnectionString.Split("EntityPath=")[1]);
 
             try

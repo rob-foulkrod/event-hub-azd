@@ -15,8 +15,9 @@ hooks:
       ### step 2: remove builds
       Remove-Item ./bin/ -Force 
       Write-Output "step 2: remove builds completed"
-      ### step 3: remove builds
-      Remove-Item ./bin/ -Force 
+      ### step 3: remove shortcuts
+      Remove-Item ./publisher.lnk -Force -Confirm:$false 
+      Remove-Item ./subscriber.lnk -Force -Confirm:$false 
       Write-Output "step 3: remove shortcuts completed"
 
   postdeploy:
