@@ -13,11 +13,11 @@ hooks:
       [System.Environment]::SetEnvironmentVariable("EH_AZD_EH_CONNECTION", $null , "User")
       Write-Output "step 1: clean up environment variables  completed"
       ### step 2: remove builds
-      Remove-Item ./bin/ -Force 
+      Remove-Item ./bin/ -Force -ErrorAction SilentlyContinue
       Write-Output "step 2: remove builds completed"
       ### step 3: remove shortcuts
-      Remove-Item ./publisher.lnk -Force -Confirm:$false 
-      Remove-Item ./subscriber.lnk -Force -Confirm:$false 
+      Remove-Item ./publisher.lnk -Force -Confirm:$false -ErrorAction SilentlyContinue
+      Remove-Item ./subscriber.lnk -Force -Confirm:$false -ErrorAction SilentlyContinue
       Write-Output "step 3: remove shortcuts completed"
 
   postdeploy:
