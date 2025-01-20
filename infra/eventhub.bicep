@@ -159,37 +159,6 @@ resource tableservice_name 'Microsoft.Storage/storageAccounts/tableServices@2023
   }
 }
 
-resource eventhub_resource_name 'Microsoft.EventHub/namespaces/eventhubs@2024-05-01-preview' = {
-  parent: eventhub_resource
-  name: name
-  location: location
-  properties: {
-    messageTimestampDescription: {
-      timestampType: 'LogAppend'
-    }
-    retentionDescription: {
-      cleanupPolicy: 'Delete'
-      retentionTimeInHours: 24
-    }
-    messageRetentionInDays: 1
-    partitionCount: 4
-    status: 'Active'
-    captureDescription: {
-      enabled: true
-      encoding: 'Avro'
-      destination: {
-        name: 'EventHubArchive.AzureBlockBlob'
-        properties: {
-          storageAccountResourceId: storageAccounts_resource.id
-          blobContainer: 'capdate'
-          archiveNameFormat: '{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}'
-        }
-      }
-      intervalInSeconds: 900
-      sizeLimitInBytes: 314572800
-    }
-  }
-}
 
 resource apps_policy_name 'Microsoft.EventHub/namespaces/eventhubs/authorizationrules@2024-05-01-preview' = {
   parent: eventhub_resource_name
@@ -220,6 +189,38 @@ resource capdata_container_name 'Microsoft.Storage/storageAccounts/blobServices/
     defaultEncryptionScope: '$account-encryption-key'
     denyEncryptionScopeOverride: false
     publicAccess: 'Blob'
+  }
+}
+
+resource eventhub_resource_name 'Microsoft.EventHub/namespaces/eventhubs@2024-05-01-preview' = {
+  parent: eventhub_resource
+  name: name
+  location: location
+  properties: {
+    messageTimestampDescription: {
+      timestampType: 'LogAppend'
+    }
+    retentionDescription: {
+      cleanupPolicy: 'Delete'
+      retentionTimeInHours: 24
+    }
+    messageRetentionInDays: 1
+    partitionCount: 4
+    status: 'Active'
+    captureDescription: {
+      enabled: true
+      encoding: 'Avro'
+      destination: {
+        name: 'EventHubArchive.AzureBlockBlob'
+        properties: {
+          storageAccountResourceId: storageAccounts_resource.id
+          blobContainer: 'capdate'
+          archiveNameFormat: '{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}'
+        }
+      }
+      intervalInSeconds: 900
+      sizeLimitInBytes: 314572800
+    }
   }
 }
 
