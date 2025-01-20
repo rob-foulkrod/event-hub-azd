@@ -28,7 +28,8 @@
             border: 1px solid lightgray; 
             margin: 5px;">
 
-**Tip:** 1. This scenario can be used in AZ-204 Developing Azure Solutions and can demonstrate the basics of communication between apps by using a broker (event hub) deployed in Azure.
+**Tip:** 
+1. This scenario can be used in AZ-204 Developing Azure Solutions and can demonstrate the basics of communication between apps by using a broker (event hub) deployed in Azure.
 
 2. The demo scenario may require the following ports for communication: 5671/5672 TCP.
 
