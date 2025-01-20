@@ -72,12 +72,10 @@ Publisher will send an event to Azure Event Hub and one of two subscribers will 
 3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
 <img src="./img/sample-pub.png" alt="Publisher" style="width:50%;">
-<br></br>
 
 4. **Subscriber** console application should output the events received by the subscriber.
 
 <img src="./img/sample-sub-processed.png" alt="Subscriber received events" style="width:70%;">
-<br></br>
 
 5. _Do not close the subscriber console._ It will be automatically closed in 30 seconds after start and you can close the console after it. It's important for the next step.
 
@@ -93,19 +91,14 @@ The scenario will mimic previous with exception of scaling subscribers. More _su
 2. Run **Subscriber** shortcut and wait while it's loading. Run two more  subscriber and observer output on their console. After 10 seconds you can see that one of the subscribers will be connected to two partitions and the other will be connected to the other single partitions. You can message '_Another processor claimed ownership_' when the partition was disconnected from one subscriber and went to another subscriber.
 
 <img src="./img/3sub.png" alt="New 3 subscribers" style="width:70%;">
-<br></br>
-
 
 3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
 <img src="./img/sample-pub.png" alt="New Publisher" style="width:50%;">
-<br></br>
 
 4. Observe output of **subscribers**. Because publisher will send by 10 events on each partition in round-robin you can observe how the events will be received by the single subscriber
 
-
 <img src="./img/3sub-processed.png" alt="3 Subscribers processed events" style="width:70%;">
-<br></br>
 
 ### 4. Observing event capturing.
 
