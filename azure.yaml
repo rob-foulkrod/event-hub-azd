@@ -4,6 +4,21 @@ name: event-hub
 metadata:
   template: azd-init@1.11.0
 hooks:
+  postdown:
+    shell: pwsh
+    interactive: true
+    run: |
+      ### step 1: clean up environment variables 
+      [System.Environment]::SetEnvironmentVariable("EH_AZD_BLOB_CONNECTION", $null , "User")
+      [System.Environment]::SetEnvironmentVariable("EH_AZD_EH_CONNECTION", $null , "User")
+      Write-Output "step 1: clean up environment variables  completed"
+      ### step 2: remove builds
+      Remove-Item ./bin/ -Force 
+      Write-Output "step 2: remove builds completed"
+      ### step 3: remove builds
+      Remove-Item ./bin/ -Force 
+      Write-Output "step 3: remove shortcuts completed"
+
   postdeploy:
     shell: pwsh
     interactive: true
