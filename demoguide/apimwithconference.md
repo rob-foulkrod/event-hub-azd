@@ -46,7 +46,7 @@
 Publisher application is communicating with subscribers though Azure Event Hub. Applications can work in a different environment and need only access to Azure for communication. Protocol AMQP (Advanced Message Queuing Protocol) over TCP will be used by default for communication with Azure Event Hub. Amount of subscribers could be scaled based on partition count deployed for the Event Hub instance.
 
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/scema.png" alt="Demo schema">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/scema.png" title="Demo schema">
 
 Publisher will send an event to Azure Event Hub and one of two subscribers will receive the event. All events are captured in a storage account and could be observed later. Published events will be received only once by a single subscriber. Subscribers will use a storage account for synchronization of processed events. The number of subscribers limited by partition count of Azure Event Hub.
 
@@ -57,7 +57,7 @@ Publisher will send an event to Azure Event Hub and one of two subscribers will 
 * evhns-%youralias% - Azure Event Hub
 * st%youralias% - Azure Storage Account 
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/rg.png" alt="Resource Group" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/rg.png" title="Resource Group" style="width:70%;">
 <br></br>
 
 
@@ -66,16 +66,16 @@ Publisher will send an event to Azure Event Hub and one of two subscribers will 
 1. After deployment you will find two shortcuts in the folder of scenario.
 2. Run **Subscriber** shortcut and wait while it's loading. The console should demonstrate a subscription for four partitions.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/sample-sub.png" alt="Subscriber just started" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/sample-sub.png" title="Subscriber just started" style="width:70%;">
 <br></br>
 
 3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/sample-pub.png" alt="Publisher" style="width:50%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/sample-pub.png" title="Publisher" style="width:50%;">
 
 4. **Subscriber** console application should output the events received by the subscriber.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/sample-sub-processed.png" alt="Subscriber received events" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/sample-sub-processed.png" title="Subscriber received events" style="width:70%;">
 
 5. _Do not close the subscriber console._ It will be automatically closed in 30 seconds after start and you can close the console after it. It's important for the next step.
 
@@ -83,22 +83,22 @@ Publisher will send an event to Azure Event Hub and one of two subscribers will 
 
 The scenario will mimic previous with exception of scaling subscribers. More _subscribers_ will process the events with higher speed and will not compete for events because synchronized thought storage accounts.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/scale.png" alt="Scaled subscribers" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/scale.png" title="Scaled subscribers" style="width:70%;">
 <br></br>
 
 1. After deployment you will find two shortcuts in the folder of scenario.
 
 2. Run **Subscriber** shortcut and wait while it's loading. Run two more  subscriber and observer output on their console. After 10 seconds you can see that one of the subscribers will be connected to two partitions and the other will be connected to the other single partitions. You can message '_Another processor claimed ownership_' when the partition was disconnected from one subscriber and went to another subscriber.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/3sub.png" alt="New 3 subscribers" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/3sub.png" title="New 3 subscribers" style="width:70%;">
 
 3. Run **Publisher** shortcut and it automatically sends 10 events to the event hub. You can press enter to send another 10 events.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/sample-pub.png" alt="New Publisher" style="width:50%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/sample-pub.png" title="New Publisher" style="width:50%;">
 
 4. Observe output of **subscribers**. Because publisher will send by 10 events on each partition in round-robin you can observe how the events will be received by the single subscriber
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/3sub-processed.png" alt="3 Subscribers processed events" style="width:70%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/3sub-processed.png" title="3 Subscribers processed events" style="width:70%;">
 
 ### 4. Observing event capturing.
 
@@ -106,11 +106,11 @@ During previous communication with Event Hub and publishing events the capturing
 
 To observe captured events you need to navigate to a storage account deployed in the same resource group with the scenario. Then you can find in the **capdata** appropriate folder per event hub and partition number (0-3) and current date and time.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/folders-cap.png" alt="3 Subscribers processed events" style="width:50%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/folders-cap.png" title="3 Subscribers processed events" style="width:50%;">
 
 You can observe the file content from the Azure portal or use a 3rd party tool to view the captured file. The _Apache AVRO_ format is used for capturing events.
 
-<img src="https://github.com/true-while/event-hub-azd/blob/main/demoguide/img/avrio.png" alt="3 Subscribers processed events" style="width:100%;">
+<img src="https://raw.githubusercontent.com/true-while/event-hub-azd/refs/heads/main/demoguide/img/avrio.png" title="3 Subscribers processed events" style="width:100%;">
 
 ### 5. References.
 
