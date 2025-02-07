@@ -2,7 +2,7 @@
 
 name: event-hub
 metadata:
-  template: azd-event-hub@1.12.0
+  template: tdd-azdeventhub@1.12.0
 infra:
   provider: "bicep"
 hooks:
