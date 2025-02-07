@@ -1,0 +1,2 @@
+- [.NET 9 Framework](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- [pwsh](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
