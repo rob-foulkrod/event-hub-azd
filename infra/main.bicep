@@ -1,4 +1,4 @@
-urityContrtargetScope = 'subscription'
+targetScope = 'subscription'
 
 @minLength(1)
 @maxLength(64)
@@ -39,6 +39,7 @@ module eventhub 'eventhub.bicep' = {
   params: {
     name: !empty(ehServiceName) ? ehServiceName : '${abbrs.eventHubNamespaces}${resourceToken}'
     location: location
+    tags: tags
   }
 }
 
